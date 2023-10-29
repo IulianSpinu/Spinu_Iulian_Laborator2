@@ -9,14 +9,16 @@ namespace Spinu_Iulian_Laborator2.Models
         public int ID { get; set; }
         [Display(Name = "Book Title")]
         public string Title { get; set; }
-        public string Author { get; set; }
-        [Column(TypeName = "decimal(6, 2)")]
-
         public decimal Price { get; set; }
         [DataType(DataType.Date)]
+        public int? AuthorID { get; set; } // Cheie străină
+        public Author Author { get; set; } // navigation property
         public DateTime PublishingDate { get; set; }
         public int? PublisherID { get; set; }
-        public Publisher? Publisher { get; set; }
-    } //navigation property
+        public Publisher Publisher { get; set; } //navigation property
+
+        public ICollection<BookCategory>? BookCategories { get; set; }
+
+    }
 
 }

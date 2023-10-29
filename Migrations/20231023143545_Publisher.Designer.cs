@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Spinu_Iulian_Laborator2.Data;
 
@@ -11,9 +12,10 @@ using Spinu_Iulian_Laborator2.Data;
 namespace Spinu_Iulian_Laborator2.Migrations
 {
     [DbContext(typeof(Spinu_Iulian_Laborator2Context))]
-    partial class Spinu_Iulian_Laborator2ContextModelSnapshot : ModelSnapshot
+    [Migration("20231023143545_Publisher")]
+    partial class Publisher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,7 @@ namespace Spinu_Iulian_Laborator2.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.Author", b =>
+            modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.Authors", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -40,7 +42,7 @@ namespace Spinu_Iulian_Laborator2.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Author");
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.Book", b =>
@@ -51,7 +53,7 @@ namespace Spinu_Iulian_Laborator2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int?>("AuthorID")
+                    b.Property<int>("AuthorID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -76,46 +78,6 @@ namespace Spinu_Iulian_Laborator2.Migrations
                     b.ToTable("Book");
                 });
 
-            modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.BookCategory", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int>("BookID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("BookID");
-
-                    b.HasIndex("CategoryID");
-
-                    b.ToTable("BookCategory");
-                });
-
-            modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.Category", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Category");
-                });
-
             modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.Publisher", b =>
                 {
                     b.Property<int>("ID")
@@ -135,9 +97,11 @@ namespace Spinu_Iulian_Laborator2.Migrations
 
             modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.Book", b =>
                 {
-                    b.HasOne("Spinu_Iulian_Laborator2.Models.Author", "Author")
-                        .WithMany("Books")
-                        .HasForeignKey("AuthorID");
+                    b.HasOne("Spinu_Iulian_Laborator2.Models.Authors", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Spinu_Iulian_Laborator2.Models.Publisher", "Publisher")
                         .WithMany("Books")
@@ -146,40 +110,6 @@ namespace Spinu_Iulian_Laborator2.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Publisher");
-                });
-
-            modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.BookCategory", b =>
-                {
-                    b.HasOne("Spinu_Iulian_Laborator2.Models.Book", "Book")
-                        .WithMany("BookCategories")
-                        .HasForeignKey("BookID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Spinu_Iulian_Laborator2.Models.Category", "Category")
-                        .WithMany("BookCategories")
-                        .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.Author", b =>
-                {
-                    b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.Book", b =>
-                {
-                    b.Navigation("BookCategories");
-                });
-
-            modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.Category", b =>
-                {
-                    b.Navigation("BookCategories");
                 });
 
             modelBuilder.Entity("Spinu_Iulian_Laborator2.Models.Publisher", b =>
