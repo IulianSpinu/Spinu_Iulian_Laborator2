@@ -46,18 +46,16 @@ namespace Spinu_Iulian_Laborator2.Pages.Books
 
             PopulateAssignedCategoryData(_context, Book);
             Book = book;
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID",
-"PublisherName");
+            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID","PublisherName");
 
-            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "ID",
-"AuthorName");
+            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "ID","AuthorName");
 
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(); OnPostAsync(int? id, string[] selectedCategories)
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedCategories)
         {
             if (id == null)
             {
@@ -74,11 +72,7 @@ namespace Spinu_Iulian_Laborator2.Pages.Books
                 return NotFound();
             }
             //se va modifica AuthorID conform cu sarcina de la lab 2
-            if (await TryUpdateModelAsync<Book>(
-            bookToUpdate,
-            "Book",
-            i => i.Title, i => i.Author,
-            i => i.Price, i => i.PublishingDate, i => i.PublisherID))
+            if (await TryUpdateModelAsync<Book>( bookToUpdate, "Book",i => i.Title, i => i.Author,i => i.Price, i => i.PublishingDate, i => i.PublisherID))
             {
                 UpdateBookCategories(_context, selectedCategories, bookToUpdate);
                 await _context.SaveChangesAsync();
@@ -93,35 +87,4 @@ namespace Spinu_Iulian_Laborator2.Pages.Books
     }
 }
 
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(Book).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BookExists(Book.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool BookExists(int id)
-        {
-          return (_context.Book?.Any(e => e.ID == id)).GetValueOrDefault();
-        }
-    }
-}
+          

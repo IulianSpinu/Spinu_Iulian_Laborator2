@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace Spinu_Iulian_Laborator2.Models
 
 {
-    public class BookCategoriesPageModell : PageModel
+    public class BookCategoriesPageModel : PageModel
     {
         public List<AssignedCategoryData> AssignedCategoryDataList;
         public void PopulateAssignedCategoryData(Spinu_Iulian_Laborator2Context context,

@@ -22,16 +22,14 @@ namespace Spinu_Iulian_Laborator2.Pages.Books
 
         public IActionResult OnGet()
         {
-            /* var authorList = _context.Author.Select(x => new
-  {
-  x.ID,
-  FullName = x.LastName + " " + x.FirstName
-  });
- */
+            var authorList = _context.Author.Select(x => new
+            {
+                     x.ID,FullName = x.LastName + " " + x.FirstName
+            });
+ 
             // daca am adaugat o proprietate FullName in clasa Author
-            ViewData["AuthorID"] = new SelectList(AuthorList, "ID", "FullName");
-            ViewData["PublisherID"] = new SelectList(_context.Publisher, "ID",
-           "PublisherName");
+            ViewData["AuthorID"] = new SelectList(authorList, "ID", "FullName");
+            ViewData["PublisherID"] = new SelectList(_context.Publisher, "ID","PublisherName");
 
             var book = new Book();
             book.BookCategories = new List<BookCategory>();
