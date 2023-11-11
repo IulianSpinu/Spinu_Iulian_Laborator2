@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -49,6 +50,7 @@ searchString)
 
                || s.Author.LastName.Contains(searchString)
 || s.Title.Contains(searchString));
+               
 
 
                 if (id != null)

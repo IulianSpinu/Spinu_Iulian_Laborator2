@@ -21,5 +21,15 @@ namespace Spinu_Iulian_Laborator2.Data
         public DbSet<Spinu_Iulian_Laborator2.Models.Author>? Author { get; set; }
 
         public DbSet<Spinu_Iulian_Laborator2.Models.Category>? Category { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Book>()
+                .HasOne(e => e.Borrowing)
+            .WithOne(e => e.Book)
+                .HasForeignKey<Borrowing>("BookID");
+        }
+        public DbSet<Spinu_Iulian_Laborator2.Models.Member>? Member { get; set; }
+        public DbSet<Spinu_Iulian_Laborator2.Models.Borrowing>? Borrowing { get; set; }
+
     }
 }
