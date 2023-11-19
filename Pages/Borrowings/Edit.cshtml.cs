@@ -36,8 +36,13 @@ namespace Spinu_Iulian_Laborator2.Pages.Borrowings
                 return NotFound();
             }
             Borrowing = borrowing;
-           ViewData["BookID"] = new SelectList(_context.Book, "ID", "ID");
-           ViewData["MemberID"] = new SelectList(_context.Member, "ID", "ID");
+            var bookList = _context.Member.Select(x => new
+            {
+                x.ID,
+                FullName = x.FirstName + " " + x.LastName
+            });
+            ViewData["BookID"] = new SelectList(_context.Book, "ID", "Title");
+            ViewData["MemberID"] = new SelectList(_context.Member, "ID", "FullName");
             return Page();
         }
 

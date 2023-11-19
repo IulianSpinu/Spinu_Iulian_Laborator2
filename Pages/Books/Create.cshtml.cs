@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Spinu_Iulian_Laborator2.Data;
 using Spinu_Iulian_Laborator2.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Spinu_Iulian_Laborator2.Pages.Books
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : BookCategoriesPageModel
     {
         private readonly Spinu_Iulian_Laborator2.Data.Spinu_Iulian_Laborator2Context _context;
